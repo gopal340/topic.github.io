@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adavirao's Homepage</title>
+    <style>
+        @keyframes dynamic-bg-gradient {
+            0% { background: linear-gradient(45deg, #ff9a9e, #fad0c4); }
+            25% { background: linear-gradient(45deg, #fad0c4, #fbc2eb); }
+            50% { background: linear-gradient(45deg, #fbc2eb, #a18cd1); }
+            75% { background: linear-gradient(45deg, #a18cd1, #ff9a9e); }
+            100% { background: linear-gradient(45deg, #ff9a9e, #fad0c4); }
+        }
+
+        @keyframes carMove {
+            0% { left: -100px; opacity: 0; }
+            50% { left: 40%; opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        /* Car animation styling */
+        .car {
+            position: absolute;
+            bottom: 30px;
+            width: 80px;
+            height: 50px;
+            background-color: #333;
+            border-radius: 10px;
+            display: none;
+            animation: carMove 5s linear forwards;
+        }
+
+        .car::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            width: 20px;
+            height: 20px;
+            background-color: #ff6666;
+            border-radius: 50%;
+        }
+
+        .car::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 15px;
+            width: 20px;
+            height: 20px;
+            background-color: #ff6666;
+            border-radius: 50%;
+        }
+
+        /* Page styling */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            background-size: 300% 300%;
+            animation: dynamic-bg-gradient 20s infinite alternate ease-in-out;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            font-size: 5rem;
+            display: inline-block;
+        }
+
+        .name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .roll {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        #A-div {
+            margin-top: 20px;
+            padding: 25px;
+            border: 4px solid transparent;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.4);
+            color: #333;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .caption {
+            margin-top: 30px;
+            font-size: 2rem;
+            font-style: italic;
+            color: #666;
+        }
+
+        .highlight {
+            color: #ff9999;
+            font-weight: bold;
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .modal-content {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            animation: fadeIn 1s;
+        }
+
+        .modal-content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-content ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .modal-content ul li {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .close-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff6666;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .close-button:hover {
+            background: #ff3333;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            ✯ Welcome to the <span>Era of Algorithms</span> ✯
+        </h1>
+        <div class="name">Adavirao</div>
+        <div class="roll">Roll No: 114</div>
+        <div id="A-div" onclick="startJourney()">Design Analysis and Algorithms Portfolio</div>
+        <p class="caption">"Algorithms are the <span class="highlight">heartbeat</span> of innovation, transforming complexity into clarity."</p>
+    </div>
+
+    <!-- Car animation -->
+    <div id="car" class="car"></div>
+
+    <!-- Modal -->
+    <div id="algorithm-modal" class="modal">
+        <div class="modal-content">
+            <h2>Applications of Algorithms</h2>
+            <ul>
+                <li><strong>Sorting:</strong> Optimizing data organization (e.g., Merge Sort, Quick Sort).</li>
+                <li><strong>Pathfinding:</strong> Finding shortest paths (e.g., Dijkstra's, A* Algorithm).</li>
+                <li><strong>Dynamic Programming:</strong> Solving complex problems efficiently (e.g., Fibonacci, Knapsack).</li>
+                <li><strong>Machine Learning:</strong> Training models with algorithmic foundations.</li>
+            </ul>
+            <button class="close-button" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function startJourney() {
+            const car = document.getElementById('car');
+            const modal = document.getElementById('algorithm-modal');
+
+            // Start car animation
+            car.style.display = 'block';
+
+            // Wait for animation to complete (5 seconds in this case)
+            setTimeout(() => {
+                car.style.display = 'none';
+                modal.style.display = 'flex';
+            }, 5000); // Match this with animation duration
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('algorithm-modal');
+            modal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
