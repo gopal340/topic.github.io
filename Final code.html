@@ -123,7 +123,56 @@ void adjustPressure(vector<House>& houses) {
         }
     }
 }
-...
+
+// Function to display the pipeline network
+void displayNetwork(const vector<House>& houses) {
+    cout << "Pipeline Network:" << endl;
+    for (const auto& house : houses) {
+        cout << "House ID: " << house.id << " Pressure: " << house.pressure << " units" << endl;
+        for (const auto& pipeline : house.pipelines) {
+            cout << "  - Connected to " << pipeline.first << " with cost: " << pipeline.second << endl;
+        }
+    }
+}
+
+// Main function
+int main() {
+    vector<House> houses;
+
+    int n;
+    cout << "Enter the number of houses: ";
+    cin >> n;
+
+    for (int i = 0; i < n; ++i) {
+        House house;
+        cout << "Enter details for house " << i + 1 << " (ID, x-coordinate, y-coordinate): ";
+        cin >> house.id >> house.x >> house.y;
+        houses.push_back(house);
+    }
+
+    cout << "Enter the pipeline connections (House1-ID House2-ID cost): " << endl;
+    while (true) {
+        string house1Id, house2Id;
+        double cost;
+        cin >> house1Id >> house2Id >> cost;
+        if (house1Id == "-1") break;
+
+        auto it1 = find_if(houses.begin(), houses.end(), [&](const House& h) { return h.id == house1Id; });
+        auto it2 = find_if(houses.begin(), houses.end(), [&](const House& h) { return h.id == house2Id; });
+
+        if (it1 != houses.end() && it2 != houses.end()) {
+            it1->pipelines.push_back({house2Id, cost});
+            it2->pipelines.push_back({house1Id, cost});
+        } else {
+            cout << "Invalid house ID(s). Try again." << endl;
+        }
+    }
+
+    adjustPressure(houses);
+    displayNetwork(houses);
+
+    return 0;
+}
         </pre>
     </div>
 
