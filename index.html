@@ -19,7 +19,6 @@
             100% { left: 100%; opacity: 0; }
         }
 
-        /* Car animation styling */
         .car {
             position: absolute;
             bottom: 30px;
@@ -31,29 +30,24 @@
             animation: carMove 5s linear forwards;
         }
 
-        .car::before {
+        .car::before, .car::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 15px;
             width: 20px;
             height: 20px;
             background-color: #ff6666;
             border-radius: 50%;
+        }
+
+        .car::before {
+            left: 15px;
         }
 
         .car::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
             right: 15px;
-            width: 20px;
-            height: 20px;
-            background-color: #ff6666;
-            border-radius: 50%;
         }
 
-        /* Page styling */
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
@@ -121,7 +115,6 @@
             font-weight: bold;
         }
 
-        /* Modal styling */
         .modal {
             display: none;
             position: fixed;
@@ -177,20 +170,29 @@
             background: #ff3333;
         }
 
-        /* Reference link in top-right corner */
-        .reference-link {
+        .reference-links {
             position: absolute;
             top: 20px;
             right: 20px;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #ff9999;
-            text-decoration: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
             z-index: 10;
         }
 
-        .reference-link:hover {
+        .reference-link {
+            padding: 5px 10px;
+            background: #333;
             color: #fff;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .reference-link:hover {
+            background: #ff6666;
         }
     </style>
 </head>
@@ -205,13 +207,16 @@
         <p class="caption">"Algorithms are the <span class="highlight">heartbeat</span> of innovation, transforming complexity into clarity."</p>
     </div>
 
-    <!-- Reference link -->
-    <a href="aboutme.html" class="reference-link" target="_blank">About Me</a>
-     <a href="team.html" class="reference-link" target="_blank">Meet Our Team</a>
-     <a href="course.html" class="reference-link" target="_blank">Course Learning</a>
-      <a href="course learning.html" class="reference-link" target="_blank">My Course Reflection</a>
-       <a href="idea of my project.html" class="reference-link" target="_blank">Idea Of My Project</a>
-      <a href="simulation-details.html" class="reference-link" target="_blank">Simulation details</a>
+    <!-- Reference links -->
+    <div class="reference-links">
+        <a href="aboutme.html" class="reference-link" target="_blank">About Me</a>
+        <a href="team.html" class="reference-link" target="_blank">Meet Our Team</a>
+        <a href="course.html" class="reference-link" target="_blank">Course Learning</a>
+        <a href="course learning.html" class="reference-link" target="_blank">Course Reflection</a>
+        <a href="idea of my project.html" class="reference-link" target="_blank">Project Idea</a>
+        <a href="simulation-details.html" class="reference-link" target="_blank">Simulation Details</a>
+    </div>
+
     <!-- Car animation -->
     <div id="car" class="car"></div>
 
