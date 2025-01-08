@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Supply Pipeline Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        #canvas {
+            border: 1px solid black;
+            margin: 20px auto;
+            display: block;
+        }
+        .controls {
+            margin: 20px;
+        }
+        .controls button {
+            margin: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .active-button {
+            background-color: #4CAF50; /* Green background for active state */
+            color: white; /* White text color */
+            border: 2px solid #45a049; /* Slightly darker border */
+        }
+    </style>
+</head>
+<body>
+    <h1>Water Supply Pipeline Management System</h1>
+    <p><a href="simulation-details.html">Learn more about the simulation</a></p>
+
+    <canvas id="canvas" width="800" height="600"></canvas>
+
+    <div class="controls">
+        <button onclick="addPipeline()">Add Pipeline</button>
+        <button onclick="removePipeline()">Remove Pipeline</button>
+        <button onclick="displayWeights()">Display Weights</button>
+        <button onclick="checkConnectivity()">Check Connectivity</button>
+        <button id="dfsButton" onclick="performDFS()">DFS</button>
+        <button id="bfsButton" onclick="performBFS()">BFS</button>
+        <button onclick="findShortestPath()">Find Shortest Path</button>
+        <button onclick="maximumFlow()">Calculate Maximum Flow</button>
+        <button onclick="minimumSpanningTree()">Minimum Spanning Tree</button>
+        <button onclick="detectCycle()">Detect Cycle</button>
+        <button onclick="updatePipelineWeight()">Update Pipeline Weight</button>
+        <button onclick="calculatePipelineCapacity()">Calculate Pipeline Capacity</button>
+        <button onclick="resetCanvas()">Reset</button>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Graph representation
+        let graph = {
+            vertices: 6, // Default number of vertices (junctions)
+            edges: [],   // List of edges (pipelines)
+            adjList: {}, // Adjacency list
+        };
+
+        // Initialize adjacency list
+        for (let i = 0; i < graph.vertices; i++) {
+            graph.adjList[i] = [];
+        }
+
+        // Draw the graph on canvas
+        function drawGraph() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw vertices (junctions)
+            const radius = 20;
+            const positions = getCircularPositions(graph.vertices, canvas.width / 2, canvas.height / 2, 200);
+
+            positions.forEach((pos, index) => {
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = "lightblue";
+                ctx.fill();
+                ctx.stroke();
+                ctx.fillStyle = "black";
+                ctx.fillText(index, pos.x - 5, pos.y + 5);
+            });
+
+            // Draw edges (pipelines)
+            graph.edges.forEach(edge => {
+                const { u, v, weight } = edge;
+                ctx.beginPath();
+                ctx.moveTo(positions[u].x, positions[u].y);
+                ctx.lineTo(positions[v].x, positions[v].y);
+                ctx.strokeStyle = "black";
+                ctx.stroke();
+
+                // Display weight
+                const midX = (positions[u].x + positions[v].x) / 2;
+                const midY = (positions[u].y + positions[v].y) / 2;
+                ctx.fillStyle = "red";
+                ctx.fillText(weight, midX, midY);
+            });
+        }
+
+        // Get circular positions for vertices
+        function getCircularPositions(vertices, centerX, centerY, radius) {
+            const positions = [];
+            for (let i = 0; i < vertices; i++) {
+                const angle = (2 * Math.PI * i) / vertices;
+                positions.push({
+                    x: centerX + radius * Math.cos(angle),
+                    y: centerY + radius * Math.sin(angle),
+                });
+            }
+            return positions;
+        }
+
+        // Add pipeline
+        function addPipeline() {
+            const u = parseInt(prompt("Enter starting junction:"));
+            const v = parseInt(prompt("Enter ending junction:"));
+            const weight = parseInt(prompt("Enter pipeline cost:"));
+
+            if (u >= 0 && v >= 0 && u < graph.vertices && v < graph.vertices) {
+                graph.edges.push({ u, v, weight });
+                graph.adjList[u].push(v);
+                graph.adjList[v].push(u);
+                drawGraph();
+            } else {
+                alert("Invalid junction numbers.");
+            }
+        }
+
+        // Remove pipeline
+        function removePipeline() {
+            const u = parseInt(prompt("Enter starting junction to remove:"));
+            const v = parseInt(prompt("Enter ending junction to remove:"));
+
+            graph.edges = graph.edges.filter(edge => !(edge.u === u && edge.v === v));
+            graph.adjList[u] = graph.adjList[u].filter(node => node !== v);
+            graph.adjList[v] = graph.adjList[v].filter(node => node !== u);
+            drawGraph();
+        }
+
+        // Display weights
+        function displayWeights() {
+            const output = document.getElementById("output");
+            output.innerHTML = "<h3>Pipeline Weights:</h3>";
+
+            graph.edges.forEach(edge => {
+                output.innerHTML += `Pipeline: Junction ${edge.u} - Junction ${edge.v}, Cost: ${edge.weight}<br>`;
+            });
+        }
+
+        // Check network connectivity
+        function checkConnectivity() {
+            const visited = new Array(graph.vertices).fill(false);
+            const stack = [];
+
+            stack.push(0);
+            visited[0] = true;
+
+            while (stack.length > 0) {
+                const node = stack.pop();
+                graph.adjList[node].forEach(neighbor => {
+                    if (!visited[neighbor]) {
+                        visited[neighbor] = true;
+                        stack.push(neighbor);
+                    }
+                });
+            }
+
+            const output = document.getElementById("output");
+            if (visited.every(v => v)) {
+                output.innerHTML = "<h3>Network is Connected</h3>";
+            } else {
+                output.innerHTML = "<h3>Network is Not Connected</h3>";
+            }
+        }
+
+        // Perform DFS
+        function performDFS() {
+            highlightButton('dfsButton'); // Highlight DFS button
+            
+            const start = parseInt(prompt("Enter starting junction for DFS:"));
+            const visited = new Array(graph.vertices).fill(false);
+            const result = [];
+
+            function dfsUtil(v) {
+                visited[v] = true;
+                result.push(v);
+                graph.adjList[v].forEach(neighbor => {
+                    if (!visited[neighbor]) {
+                        dfsUtil(neighbor);
+                    }
+                });
+            }
+
+            dfsUtil(start);
+
+            const output = document.getElementById("output");
+            output.innerHTML = `<h3>DFS Traversal Starting from Junction ${start}:</h3>${result.join(" -> ")}`;
+            drawGraphTraversal(result);
+
+            setTimeout(() => removeHighlight('dfsButton'), 2000); // Remove highlight after 2 seconds
+        }
+
+        // Perform BFS
+        function performBFS() {
+            highlightButton('bfsButton'); // Highlight BFS button
+            
+            const start = parseInt(prompt("Enter starting junction for BFS:"));
+            const visited = new Array(graph.vertices).fill(false);
+            const queue = [];
+            const result = [];
+
+            queue.push(start);
+            visited[start] = true;
+
+            while (queue.length > 0) {
+                const v = queue.shift();
+                result.push(v);
+                graph.adjList[v].forEach(neighbor => {
+                    if (!visited[neighbor]) {
+                        visited[neighbor] = true;
+                        queue.push(neighbor);
+                    }
+                });
+            }
+
+            const output = document.getElementById("output");
+            output.innerHTML = `<h3>BFS Traversal Starting from Junction ${start}:</h3>${result.join(" -> ")}`;
+            drawGraphTraversal(result);
+
+            setTimeout(() => removeHighlight('bfsButton'), 2000); // Remove highlight after 2 seconds
+        }
+
+        // Function to highlight a button by its ID
+        function highlightButton(buttonId) {
+            const button = document.getElementById(buttonId);
+            button.classList.add('active-button');
+        }
+
+        // Function to remove the highlight from a button by its ID
+        function removeHighlight(buttonId) {
+            const button = document.getElementById(buttonId);
+            button.classList.remove('active-button');
+        }
+
+        // Draw graph traversal
+        function drawGraphTraversal(order) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const radius = 20;
+            const positions = getCircularPositions(graph.vertices, canvas.width / 2, canvas.height / 2, 200);
+
+            // Highlight traversed vertices
+            order.forEach((vertex, index) => {
+                ctx.beginPath();
+                ctx.arc(positions[vertex].x, positions[vertex].y, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = index === 0 ? "green" : "yellow"; // Start node green, others yellow
+                ctx.fill();
+                ctx.stroke();
+                ctx.fillStyle = "black";
+                ctx.fillText(vertex, positions[vertex].x - 5, positions[vertex].y + 5);
+            });
+
+            // Draw remaining vertices
+            positions.forEach((pos, index) => {
+                if (!order.includes(index)) {
+                    ctx.beginPath();
+                    ctx.arc(pos.x, pos.y, radius, 0, 2 * Math.PI);
+                    ctx.fillStyle = "lightblue";
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.fillStyle = "black";
+                    ctx.fillText(index, pos.x - 5, pos.y + 5);
+                }
+            });
+
+            // Draw edges
+            graph.edges.forEach(edge => {
+                const { u, v, weight } = edge;
+                ctx.beginPath();
+                ctx.moveTo(positions[u].x, positions[u].y);
+                ctx.lineTo(positions[v].x, positions[v].y);
+                ctx.strokeStyle = "black";
+                ctx.stroke();
+
+                // Display weight
+                const midX = (positions[u].x + positions[v].x) / 2;
+                const midY = (positions[u].y + positions[v].y) / 2;
+                ctx.fillStyle = "red";
+                ctx.fillText(weight, midX, midY);
+            });
+        }
+
+        // Reset canvas
+        function resetCanvas() {
+            graph.edges = [];
+            for (let i = 0; i < graph.vertices; i++) {
+                graph.adjList[i] = [];
+            }
+            drawGraph();
+            document.getElementById("output").innerHTML = "";
+        }
+
+        // Initial draw
+        drawGraph();
+    </script>
+</body>
+</html>

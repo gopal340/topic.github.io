@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utility Network Design using BFS and DFS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            background: linear-gradient(45deg, rgba(0, 204, 255, 0.8), rgba(255, 0, 204, 0.8));
+            background-size: 400% 400%;
+            animation: gradientBackground 5s ease infinite;
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: #ffdd57;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section p {
+            line-height: 1.6;
+        }
+
+        .section code {
+            background-color: #333;
+            padding: 3px 5px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            color: #ffdd57;
+        }
+
+        @keyframes gradientBackground {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%; }
+            100% {background-position: 0% 50%;}
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Chosen Subtopic</h1>
+    <!-- Leave one line gap -->
+    <h1>Utility Network Design with BFS and DFS</h1>
+
+    <div class="content">
+        <div class="section">
+            <h2>BFS (Breadth-First Search) in Utility Network Design</h2>
+            <p>BFS is particularly effective when you need to explore all possible paths or routes at once and ensure that tasks are completed level by level or in parallel. It helps in optimizing flow and distributing resources efficiently across the network.</p>
+
+            <h3>Application of BFS in Utility Network Design</h3>
+            <ul>
+                <li><strong>Shortest Path Optimization for Pipeline Routing:</strong> BFS ensures minimal resource use and faster data flow by exploring all neighboring nodes before moving on to the next level.</li>
+                <li><strong>Parallel Task Processing:</strong> BFS allows for independent tasks (such as maintenance, resource allocation) to be processed at the same time, reducing delays.</li>
+                <li><strong>Flow Optimization and Resource Distribution:</strong> BFS ensures balanced resource distribution across the network, avoiding bottlenecks by exploring the network level by level.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>DFS (Depth-First Search) in Utility Network Design</h2>
+            <p>DFS is suitable when the design or flow of tasks follows a hierarchical structure or when there are nested dependencies. It’s ideal for evaluating processes that need to be thoroughly explored before backtracking.</p>
+
+            <h3>Application of DFS in Utility Network Design</h3>
+            <ul>
+                <li><strong>Hierarchical Task Scheduling:</strong> DFS ensures that tasks with dependencies are completed in a specific order, exploring each section fully before moving on.</li>
+                <li><strong>Recursive Optimization or Feedback Systems:</strong> DFS helps in deep recursive decision-making, adjusting parameters like flow rate based on past outputs.</li>
+                <li><strong>Error Handling and Fault Resolution:</strong> DFS traces faults through all levels of the pipeline, ensuring thorough resolution before moving to other parts.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Combining BFS and DFS in Pipeline Design</h2>
+            <p>In some cases, combining both BFS and DFS will provide optimal solutions:</p>
+            <ul>
+                <li><strong>BFS for Parallel Tasks and Broad Optimization:</strong> BFS is ideal for broad optimization tasks that can run in parallel.</li>
+                <li><strong>DFS for Hierarchical or Deep Evaluation Tasks:</strong> DFS is useful when deep inspection or recursion is required for a specific section of the network.</li>
+            </ul>
+            <p><strong>Practical Example:</strong> In a city-wide water distribution system, BFS ensures even resource distribution across the city, while DFS handles detailed maintenance tasks on each pipeline segment before moving to the next.</p>
+        </div>
+
+        <div class="section">
+            <h2>Practical Scenario: Refer to the Idea of My Project</h2>
+            <p>If you want to dive deeper into a practical scenario related to this topic, it can reference the <a href="idea_of_my_project.html" target="_blank">idea of my project</a> for a detailed approach to solving network-related challenges using BFS and DFS.</p>
+        </div>
+    </div>
+
+</body>
+</html>

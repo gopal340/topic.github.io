@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design and Analysis of Algorithms</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #ff7e5f, #feb47b);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    .topic {
+      width: 100%;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      transition: all 0.5s ease;
+    }
+    .topic:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    .content {
+      display: none;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .active {
+      display: block;
+      animation: moveRight 1s ease-in-out forwards;
+    }
+    @keyframes moveRight {
+      0% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(10px);
+      }
+      100% {
+        transform: translateX(20px);
+      }
+    }
+    .shake {
+      animation: shake 0.5s ease-in-out;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); }
+      75% { transform: translateX(-10px); }
+      100% { transform: translateX(0); }
+    }
+    .subtopics {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Design and Analysis of Algorithms</h1>
+  <p style="text-align:center;">This course introduces the fundamentals of algorithms and data structures, focusing on their design, analysis, and application in real-world problems.</p>
+
+  <div class="topic" onclick="toggleContent('topic1'); shakeEffect('topic1')">
+    Math Basics
+  </div>
+  <div id="topic1" class="content">
+    <p>We started by understanding basic concepts like time and space efficiency, recurrence relations, and solved problems such as the Tower of Brahma and n-Queens problem.</p>
+    <div class="subtopics">
+      <strong>Subtopics:</strong>
+      <ul>
+        <li>Time and Space Complexity</li>
+        <li>Recurrence Relations</li>
+        <li>Examples: Tower of Brahma, n-Queens Problem</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic" onclick="toggleContent('topic2'); shakeEffect('topic2')">
+    Math Foundations
+  </div>
+  <div id="topic2" class="content">
+    <p>This section covers orders of growth and their importance in evaluating the efficiency of algorithms.</p>
+    <div class="subtopics">
+      <strong>Subtopics:</strong>
+      <ul>
+        <li>Big-O Notation</li>
+        <li>Asymptotic Behavior</li>
+        <li>Order of Growth Analysis</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic" onclick="toggleContent('topic3'); shakeEffect('topic3')">
+    Structured Data Management
+  </div>
+  <div id="topic3" class="content">
+    <p>We explored n-ary trees, binary trees, binary search trees, AVL trees, Red-Black trees, Tries, skip lists, and other structures like Fenwick Trees and heaps.</p>
+    <div class="subtopics">
+      <strong>Subtopics:</strong>
+      <ul>
+        <li>Binary Search Trees (BST)</li>
+        <li>AVL Trees</li>
+        <li>Red-Black Trees</li>
+        <li>Heaps and Fenwick Trees</li>
+        <li>Tries and Skip Lists</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic" onclick="toggleContent('topic4'); shakeEffect('topic4')">
+    Sorting and Searching Algorithms
+  </div>
+  <div id="topic4" class="content">
+    <p>Algorithms like Bubble Sort, Quick Sort, Heap Sort, Linear Search, Binary Search, and String Matching (KMP, Rabin-Karp) help in efficient data processing.</p>
+    <div class="subtopics">
+      <strong>Subtopics:</strong>
+      <ul>
+        <li>Bubble Sort, Quick Sort, Heap Sort</li>
+        <li>Linear Search, Binary Search</li>
+        <li>String Matching (KMP, Rabin-Karp)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic" onclick="toggleContent('topic5'); shakeEffect('topic5')">
+    Graph Algorithms
+  </div>
+  <div id="topic5" class="content">
+    <p>We studied graph algorithms like DFS, BFS, Dijkstra’s, Bellman-Ford, Floyd-Warshall, and Minimum Spanning Tree algorithms (Prim’s, Kruskal’s).</p>
+    <div class="subtopics">
+      <strong>Subtopics:</strong>
+      <ul>
+        <li>DFS and BFS</li>
+        <li>Dijkstra’s Shortest Path</li>
+        <li>Bellman-Ford, Floyd-Warshall</li>
+        <li>Prim’s and Kruskal’s Algorithms</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic" onclick="toggleContent('topic6'); shakeEffect('topic6')">
+    Real-Time Applications
+  </div>
+  <div id="topic6" class="content">
+    <p>This course bridges the gap between theoretical understanding and practical application in fields like Smart City Design, sorting and searching, tree data structures, and competitive programming.</p>
+    <div class="subtopics">
+      <strong>Subtopics:</strong>
+      <ul>
+        <li>Smart City Design: Optimizing road networks</li>
+        <li>Sorting and Searching for quick data processing</li>
+        <li>Tree Data Structures in file systems and compilers</li>
+        <li>Competitive Programming and Problem Solving</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleContent(topicId) {
+    const content = document.getElementById(topicId);
+    content.classList.toggle('active');
+  }
+
+  function shakeEffect(topicId) {
+    const topic = document.getElementById(topicId);
+    topic.classList.add('shake');
+    setTimeout(() => {
+      topic.classList.remove('shake');
+    }, 500);
+  }
+</script>
+
+</body>
+</html>
