@@ -1,116 +1,177 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Utility Network Design using BFS and DFS</title>
+    <title>Utility Network Design</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #fff;
-            background: linear-gradient(45deg, rgba(0, 204, 255, 0.8), rgba(255, 0, 204, 0.8));
-            background-size: 400% 400%;
-            animation: gradientBackground 5s ease infinite;
+            margin: 20px;
         }
-
-        h1, h2, h3 {
-            color: #fff;
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        h3 {
-            color: #ffdd57;
-        }
-
-        .content {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-        }
-
-        ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        ul li {
-            margin: 10px 0;
-        }
-
-        .section {
-            margin-bottom: 40px;
-        }
-
-        .section p {
-            line-height: 1.6;
-        }
-
-        .section code {
-            background-color: #333;
-            padding: 3px 5px;
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background: #f4f4f4;
+            padding: 10px;
             border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            color: #ffdd57;
-        }
-
-        @keyframes gradientBackground {
-            0% {background-position: 0% 50%;}
-            50% {background-position: 100% 50%; }
-            100% {background-position: 0% 50%;}
+            overflow: auto;
+            max-height: 500px;
         }
     </style>
 </head>
 <body>
+    <h1>Utility Network Design - Full C++ Code</h1>
+    <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
 
-    <h1>Chosen Subtopic</h1>
-    <!-- Leave one line gap -->
-    <h1>Utility Network Design with BFS and DFS</h1>
+struct House {
+    string id;
+    double x, y;
+    double pressure = 100.0; // Default pressure for each house
+    vector&lt;pair&lt;string, double&gt;&gt; pipelines; // (connected house, cost)
+};
 
-    <div class="content">
-        <div class="section">
-            <h2>BFS (Breadth-First Search) in Utility Network Design</h2>
-            <p>BFS is particularly effective when you need to explore all possible paths or routes at once and ensure that tasks are completed level by level or in parallel. It helps in optimizing flow and distributing resources efficiently across the network.</p>
+// Function to calculate Euclidean distance between two houses
+double calculateDistance(const House&amp; house1, const House&amp; house2) {
+    return sqrt(pow(house2.x - house1.x, 2) + pow(house2.y - house1.y, 2));
+}
 
-            <h3>Application of BFS in Utility Network Design</h3>
-            <ul>
-                <li><strong>Shortest Path Optimization for Pipeline Routing:</strong> BFS ensures minimal resource use and faster data flow by exploring all neighboring nodes before moving on to the next level.</li>
-                <li><strong>Parallel Task Processing:</strong> BFS allows for independent tasks (such as maintenance, resource allocation) to be processed at the same time, reducing delays.</li>
-                <li><strong>Flow Optimization and Resource Distribution:</strong> BFS ensures balanced resource distribution across the network, avoiding bottlenecks by exploring the network level by level.</li>
-            </ul>
-        </div>
+// Adjust pressure within safe limits for the pipeline system
+void adjustPressure(House&amp; house, double change) {
+    house.pressure = max(20.0, min(100.0, house.pressure + change));
+}
 
-        <div class="section">
-            <h2>DFS (Depth-First Search) in Utility Network Design</h2>
-            <p>DFS is suitable when the design or flow of tasks follows a hierarchical structure or when there are nested dependencies. It’s ideal for evaluating processes that need to be thoroughly explored before backtracking.</p>
+// BFS to traverse the utility network
+void bfsTraversal(const unordered_map&lt;string, House&gt;&amp; network, const string&amp; startId) {
+    queue&lt;string&gt; q;
+    unordered_set&lt;string&gt; visited;
 
-            <h3>Application of DFS in Utility Network Design</h3>
-            <ul>
-                <li><strong>Hierarchical Task Scheduling:</strong> DFS ensures that tasks with dependencies are completed in a specific order, exploring each section fully before moving on.</li>
-                <li><strong>Recursive Optimization or Feedback Systems:</strong> DFS helps in deep recursive decision-making, adjusting parameters like flow rate based on past outputs.</li>
-                <li><strong>Error Handling and Fault Resolution:</strong> DFS traces faults through all levels of the pipeline, ensuring thorough resolution before moving to other parts.</li>
-            </ul>
-        </div>
+    q.push(startId);
+    visited.insert(startId);
 
-        <div class="section">
-            <h2>Combining BFS and DFS in Pipeline Design</h2>
-            <p>In some cases, combining both BFS and DFS will provide optimal solutions:</p>
-            <ul>
-                <li><strong>BFS for Parallel Tasks and Broad Optimization:</strong> BFS is ideal for broad optimization tasks that can run in parallel.</li>
-                <li><strong>DFS for Hierarchical or Deep Evaluation Tasks:</strong> DFS is useful when deep inspection or recursion is required for a specific section of the network.</li>
-            </ul>
-            <p><strong>Practical Example:</strong> In a city-wide water distribution system, BFS ensures even resource distribution across the city, while DFS handles detailed maintenance tasks on each pipeline segment before moving to the next.</p>
-        </div>
+    while (!q.empty()) {
+        string currentId = q.front();
+        q.pop();
 
-        <div class="section">
-            <h2>Practical Scenario: Refer to the Idea of My Project</h2>
-            <p>If you want to dive deeper into a practical scenario related to this topic, it can reference the <a href="idea_of_my_project.html" target="_blank">idea of my project</a> for a detailed approach to solving network-related challenges using BFS and DFS.</p>
-        </div>
-    </div>
+        cout &lt;&lt; "Visited: " &lt;&lt; currentId &lt;&lt; endl;
+        for (const auto&amp; [neighborId, cost] : network.at(currentId).pipelines) {
+            if (visited.find(neighborId) == visited.end()) {
+                q.push(neighborId);
+                visited.insert(neighborId);
+            }
+        }
+    }
+}
 
+// DFS to traverse the utility network
+void dfsTraversal(const unordered_map&lt;string, House&gt;&amp; network, const string&amp; startId, unordered_set&lt;string&gt;&amp; visited) {
+    visited.insert(startId);
+    cout &lt;&lt; "Visited: " &lt;&lt; startId &lt;&lt; endl;
+
+    for (const auto&amp; [neighborId, cost] : network.at(startId).pipelines) {
+        if (visited.find(neighborId) == visited.end()) {
+            dfsTraversal(network, neighborId, visited);
+        }
+    }
+}
+
+// Kruskal's Algorithm to find Minimum Spanning Tree (MST)
+struct Edge {
+    string house1, house2;
+    double cost;
+};
+
+bool compareEdges(const Edge&amp; e1, const Edge&amp; e2) {
+    return e1.cost &lt; e2.cost;
+}
+
+string findParent(const string&amp; house, unordered_map&lt;string, string&gt;&amp; parent) {
+    if (parent[house] != house) {
+        parent[house] = findParent(parent[house], parent);
+    }
+    return parent[house];
+}
+
+void unionHouses(const string&amp; house1, const string&amp; house2, unordered_map&lt;string, string&gt;&amp; parent, unordered_map&lt;string, int&gt;&amp; rank) {
+    string parent1 = findParent(house1, parent);
+    string parent2 = findParent(house2, parent);
+
+    if (parent1 != parent2) {
+        if (rank[parent1] &gt; rank[parent2]) {
+            parent[parent2] = parent1;
+        } else if (rank[parent1] &lt; rank[parent2]) {
+            parent[parent1] = parent2;
+        } else {
+            parent[parent2] = parent1;
+            rank[parent1]++;
+        }
+    }
+}
+
+vector&lt;Edge&gt; kruskalMST(const vector&lt;Edge&gt;&amp; edges, const vector&lt;string&gt;&amp; houseIds) {
+    vector&lt;Edge&gt; mst;
+    unordered_map&lt;string, string&gt; parent;
+    unordered_map&lt;string, int&gt; rank;
+
+    for (const string&amp; house : houseIds) {
+        parent[house] = house;
+        rank[house] = 0;
+    }
+
+    vector&lt;Edge&gt; sortedEdges = edges;
+    sort(sortedEdges.begin(), sortedEdges.end(), compareEdges);
+
+    for (const Edge&amp; edge : sortedEdges) {
+        if (findParent(edge.house1, parent) != findParent(edge.house2, parent)) {
+            mst.push_back(edge);
+            unionHouses(edge.house1, edge.house2, parent, rank);
+        }
+    }
+
+    return mst;
+}
+
+int main() {
+    // Create houses
+    unordered_map&lt;string, House&gt; network = {
+        {"H1", {"H1", 0, 0}},
+        {"H2", {"H2", 1, 1}},
+        {"H3", {"H3", 2, 2}},
+        {"H4", {"H4", 3, 3}},
+    };
+
+    // Add pipelines
+    network["H1"].pipelines.push_back({"H2", 1.5});
+    network["H2"].pipelines.push_back({"H3", 2.0});
+    network["H3"].pipelines.push_back({"H4", 2.5});
+    network["H4"].pipelines.push_back({"H1", 3.0});
+
+    // BFS traversal
+    cout &lt;&lt; "BFS Traversal:\n";
+    bfsTraversal(network, "H1");
+
+    // DFS traversal
+    cout &lt;&lt; "\nDFS Traversal:\n";
+    unordered_set&lt;string&gt; visited;
+    dfsTraversal(network, "H1", visited);
+
+    // MST
+    vector&lt;Edge&gt; edges = {
+        {"H1", "H2", 1.5},
+        {"H2", "H3", 2.0},
+        {"H3", "H4", 2.5},
+        {"H4", "H1", 3.0},
+    };
+    vector&lt;string&gt; houseIds = {"H1", "H2", "H3", "H4"};
+    vector&lt;Edge&gt; mst = kruskalMST(edges, houseIds);
+
+    cout &lt;&lt; "\nMinimum Spanning Tree:\n";
+    for (const Edge&amp; edge : mst) {
+        cout &lt;&lt; edge.house1 &lt;&lt; " - " &lt;&lt; edge.house2 &lt;&lt; ": " &lt;&lt; edge.cost &lt;&lt; endl;
+    }
+
+    return 0;
+}
+    </pre>
 </body>
 </html>
