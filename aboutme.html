@@ -54,6 +54,26 @@
             font-size: 0.9em;
             color: #ddd;
         }
+        .back-to-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #0078d4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            z-index: 100;
+        }
+        .back-to-home:hover {
+            background-color: #005fa3;
+            transform: scale(1.05);
+        }
         @keyframes fall {
             0% {
                 transform: translateY(-100%);
@@ -75,6 +95,7 @@
     </style>
 </head>
 <body>
+    <button class="back-to-home" onclick="location.href='index.html';">Back to Home</button>
     <div class="container">
         <img src="adavirao.jpg" alt="Adavirao V K"> <!-- Replace 'your_photo.jpg' with the actual file path -->
         <h1>About Me</h1>
