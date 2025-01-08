@@ -52,9 +52,30 @@
             padding: 0 10px 15px;
             font-size: 1em;
         }
+        .back-to-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #FFD700;
+            color: #1c1b1b;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            z-index: 100;
+        }
+        .back-to-home:hover {
+            background-color: #e6c300;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
+    <button class="back-to-home" onclick="location.href='index.html';">Back to Home</button>
     <div class="team-section">
         <h1>Meet Our Team</h1>
         <div class="team-container">
