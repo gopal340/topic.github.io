@@ -10,11 +10,11 @@
       padding: 0;
       font-family: Arial, sans-serif;
       height: 100vh;
-      background-color: #2c3e50;
+      background-color: #2c3e50; /* Dark background for night effect */
       overflow: hidden;
       position: relative;
       color: white;
-      background-image: radial-gradient(circle at 50% 50%, #2c3e50, #000000);
+      background-image: radial-gradient(circle at 50% 50%, #2c3e50, #000000); /* Adds a smooth gradient for night feel */
     }
 
     .container {
@@ -23,7 +23,7 @@
       z-index: 2;
       position: relative;
       max-height: 100vh;
-      overflow-y: auto;
+      overflow-y: scroll; /* Make the container scrollable */
     }
 
     .member-list {
@@ -35,12 +35,11 @@
       font-size: 20px;
       margin: 10px;
       cursor: pointer;
-      transition: transform 0.3s, color 0.3s;
+      transition: transform 0.3s;
     }
 
     .member-list li:hover {
       transform: scale(1.1);
-      color: #feb47b;
     }
 
     .reflection-content {
@@ -67,9 +66,10 @@
     .reflection-body {
       font-size: 16px;
       line-height: 1.5;
-      margin-bottom: 40px;
+      margin-bottom: 40px; /* Added space at the bottom for scrolling */
     }
 
+    /* Starry sky effect */
     .star {
       position: absolute;
       background-color: rgba(255, 255, 255, 0.8);
@@ -92,6 +92,7 @@
       }
     }
 
+    /* Creating random star effects */
     .star:nth-child(1) {
       width: 3px;
       height: 3px;
@@ -131,43 +132,117 @@
       left: 30%;
       animation-duration: 6s;
     }
+
+    /* Background particles (stars) */
+    .particle {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: particleAnimation 3s infinite;
+    }
+
+    @keyframes particleAnimation {
+      0% {
+        transform: scale(0.5) translateY(0) translateX(0);
+      }
+      100% {
+        transform: scale(1.2) translateY(-500px) translateX(500px);
+        opacity: 0;
+      }
+    }
+
+    .particle:nth-child(1) {
+      width: 5px;
+      height: 5px;
+      animation-duration: 3.5s;
+    }
+    .particle:nth-child(2) {
+      width: 8px;
+      height: 8px;
+      animation-duration: 4s;
+    }
+    .particle:nth-child(3) {
+      width: 7px;
+      height: 7px;
+      animation-duration: 4.2s;
+    }
+    .particle:nth-child(4) {
+      width: 6px;
+      height: 6px;
+      animation-duration: 3.8s;
+    }
+    .particle:nth-child(5) {
+      width: 9px;
+      height: 9px;
+      animation-duration: 4.5s;
+    }
   </style>
 </head>
 <body>
+  <a href="index.html" class="back-button">Home</a>
   <div class="container">
     <h1>Course Learning Reflections</h1>
     <ul class="member-list">
       <li id="member1" onclick="showReflection('reflection1')">Adavirao's Reflection</li>
+      <!-- Add other members here as you gather their reflections -->
     </ul>
 
     <div id="reflection1" class="reflection-content">
       <div class="reflection-header">Course Learning Reflections</div>
       <div class="reflection-body">
         <h2>1. Problems in Nature: Iteration, Recursion, and Backtracking</h2>
-        <p><strong>Iteration</strong>: Iterative processes like life cycles mimic loops in computing, such as traversing lists or cycles in algorithms.</p>
-        <p><strong>Recursion</strong>: Self-similar natural patterns reflect recursive solutions in computing, like solving factorials or decision trees.</p>
-        <p><strong>Backtracking</strong>: Systematic exploration mirrors pathfinding in mazes or solving N-Queens problems.</p>
+        <p><strong>Iteration</strong>: Nature showcases iterative processes such as the repetition of seasons, life cycles, and growth patterns. In computing, iteration involves repeating a process in a loop until a specific condition is met. Examples: Traversing lists, simulating cycles, or executing iterative loops in algorithms.</p>
+        
+        <p><strong>Recursion</strong>: Recursion is observed in self-similar patterns in nature, such as fractals or tree branches. Computationally, recursion is used to break down problems into smaller subproblems that resemble the original. Examples: Solving factorials, Towers of Hanoi, and exploring decision trees (e.g., N-Queens Problem).</p>
+
+        <p><strong>Backtracking</strong>: In nature, backtracking can be seen in ant colonies forming mazes or predators hunting prey, where decisions are reevaluated when encountering dead ends. Computationally, it involves systematically exploring all possibilities and undoing steps if a solution path fails. Examples: Constraint satisfaction problems like Sudoku, N-Queens, and pathfinding in mazes.</p>
 
         <h2>2. Space and Time Efficiency</h2>
-        <p><strong>Space Efficiency</strong>: Optimizing memory is key for embedded systems. Examples: Fenwick trees for range queries.</p>
-        <p><strong>Time Efficiency</strong>: Speed is vital for real-time applications like GPS or search engines.</p>
+        <p><strong>Space Efficiency</strong>: Refers to the memory or storage used by an algorithm. Space-efficient algorithms are crucial for systems with limited resources, such as embedded systems or mobile devices.</p>
+        <p><strong>Time Efficiency</strong>: Refers to how quickly an algorithm executes. Time-efficient algorithms are essential for real-time applications like navigation systems, stock trading, or search engines.</p>
+        
+        <h2>3. Design Principles</h2>
+        <p><strong>Divide and Conquer</strong>: Break a problem into smaller, independent subproblems, solve them, and combine the results. Examples: Merge Sort, Quick Sort. Applications: Sorting large datasets, computational geometry.</p>
+        <p><strong>Greedy Algorithms</strong>: Make the best choice at each step, aiming for an optimal solution. Examples: Dijkstra’s Algorithm, Kruskal’s Algorithm. Applications: Network routing, MST construction.</p>
 
-        <h2>3. Algorithm Design Principles</h2>
-        <p><strong>Divide and Conquer</strong>: Merge Sort, Quick Sort. Applications: Dataset sorting, geometry.</p>
-        <p><strong>Greedy Algorithms</strong>: Locally optimal choices for MSTs or network routing.</p>
+        <h2>4. Hierarchical Data and Tree Structures</h2>
+        <p><strong>Hierarchical Data</strong>: Data organized in parent-child relationships (e.g., file systems, XML/JSON structures).</p>
+        <p><strong>Tree Structures</strong>: Binary Search Trees (BST), AVL Trees, Red-Black Trees, Heaps, Tries.</p>
 
-        <h2>4. Graph Algorithms</h2>
-        <p><strong>Spanning Trees</strong>: Prim’s and Kruskal’s for network design.</p>
-        <p><strong>Shortest Paths</strong>: Dijkstra’s and Bellman-Ford for navigation systems.</p>
+        <h2>5. Array Query Algorithms</h2>
+        <p><strong>Fenwick Tree</strong>: Efficient range sum queries and point updates.</p>
+        <p><strong>Segment Tree</strong>: Handles range queries like sum, minimum, or maximum.</p>
+
+        <h2>6. Tree vs. Graph Traversals</h2>
+        <p>Comparison of tree and graph traversal methods such as BFS, DFS, and their applications.</p>
+
+        <h2>7. Sorting and Searching Algorithms</h2>
+        <p><strong>Sorting Algorithms</strong>: Bubble Sort, Quick Sort, Merge Sort, etc. </p>
+        <p><strong>String Searching Algorithms</strong>: Boyer-Moore, KMP, Rabin-Karp.</p>
+
+        <h2>8. Graph Algorithms</h2>
+        <p><strong>Spanning Trees</strong>: Prim’s and Kruskal’s Algorithms. Applications: Network design, transportation planning.</p>
+        <p><strong>Shortest Paths</strong>: Dijkstra’s, Bellman-Ford, Floyd-Warshall. Applications: GPS navigation, game theory.</p>
+
+        <h2>9. Algorithm Design Techniques</h2>
+        <p><strong>Brute Force</strong>: Solve problems directly using trial and error. Example: Bubble Sort.</p>
+        <p><strong>Divide and Conquer</strong>: Break the problem recursively into smaller parts. Example: Merge Sort.</p>
+        <p><strong>Dynamic Programming</strong>: Use memoization to avoid redundant calculations. Example: Floyd-Warshall Algorithm.</p>
+        <p><strong>Greedy Algorithms</strong>: Make locally optimal choices at each step. Example: Prim’s Algorithm.</p>
+        <p><strong>Backtracking</strong>: Explore and undo paths when needed. Example: N-Queens Problem.</p>
+        <p><strong>Transform and Conquer</strong>: Simplify problems before solving them. Example: AVL Trees.</p>
       </div>
     </div>
   </div>
 
-  <div class="star"></div>
-  <div class="star"></div>
-  <div class="star"></div>
-  <div class="star"></div>
-  <div class="star"></div>
+  <!-- Stars in the background -->
+  <div class="star" style="top: 10%; left: 15%;"></div>
+  <div class="star" style="top: 20%; left: 35%;"></div>
+  <div class="star" style="top: 30%; left: 60%;"></div>
+  <div class="star" style="top: 40%; left: 75%;"></div>
+  <div class="star" style="top: 50%; left: 90%;"></div>
+  <div class="star" style="top: 60%; left: 25%;"></div>
+  <div class="star" style="top: 70%; left: 55%;"></div>
 
   <script>
     function showReflection(reflectionId) {
