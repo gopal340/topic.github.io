@@ -33,6 +33,23 @@
             color: white; /* White text color */
             border: 2px solid #45a049; /* Slightly darker border */
         }
+        #backToHome {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #backToHome:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -60,14 +77,21 @@
     <div id="output"></div>
 
     <script>
+        // Create Back to Home button dynamically
+        const backButton = document.createElement("a");
+        backButton.id = "backToHome";
+        backButton.href = "index.html";
+        backButton.textContent = "Back to Home";
+        document.body.appendChild(backButton);
+
+        // Graph representation
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
 
-        // Graph representation
         let graph = {
-            vertices: 6, // Default number of vertices (junctions)
-            edges: [],   // List of edges (pipelines)
-            adjList: {}, // Adjacency list
+            vertices: 6,
+            edges: [],
+            adjList: {},
         };
 
         // Initialize adjacency list
